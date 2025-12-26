@@ -11,16 +11,7 @@ import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-background overflow-x-hidden">
-      {/* Global background effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-basketball-orange/5 via-transparent to-transparent" />
-        
-        {/* Noise texture */}
-        <div className="absolute inset-0 noise-overlay" />
-      </div>
-
-      {/* Page content */}
+      {/* Page content - PhotoAI style with seamless sections */}
       <Header />
       <Hero />
       <Features />
@@ -33,4 +24,3 @@ export default function Home() {
     </main>
   )
 }
-

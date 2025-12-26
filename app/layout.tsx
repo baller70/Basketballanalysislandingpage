@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter, Bebas_Neue } from 'next/font/google'
+import { Saira, Bebas_Neue } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({
+const saira = Saira({
   subsets: ['latin'],
-  variable: '--font-geist-sans',
+  variable: '--font-saira',
+  weight: ['300', '400', '500', '600', '700'],
 })
 
 const bebasNeue = Bebas_Neue({
@@ -39,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
+      <body className={`${saira.variable} ${bebasNeue.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

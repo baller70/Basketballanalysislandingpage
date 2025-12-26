@@ -99,56 +99,37 @@ const PricingCard = ({ plan, index }: { plan: typeof plans[0]; index: number }) 
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={cn(
-        'relative h-full',
-        plan.popular && 'z-10'
-      )}
+      className={cn('pricing-card-wrap', plan.popular && 'popular')}
     >
       {/* Popular badge */}
       {plan.popular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-          <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-basketball-orange to-basketball-glow text-white text-sm font-semibold shadow-lg shadow-basketball-orange/30">
-            Most Popular
-          </div>
+        <div className="pricing-popular-badge">
+          Most Popular
         </div>
       )}
 
-      <div
-        className={cn(
-          'h-full glass rounded-2xl p-6 md:p-8 transition-all duration-300',
-          plan.popular
-            ? 'border-basketball-orange/50 shadow-xl shadow-basketball-orange/10 scale-105'
-            : 'hover:border-basketball-orange/20'
-        )}
-      >
+      <div className={cn('pricing-card', plan.popular && 'popular')}>
         {/* Icon */}
-        <div className={cn(
-          'w-12 h-12 rounded-xl flex items-center justify-center mb-4',
-          'bg-gradient-to-br',
-          plan.gradient
-        )}>
+        <div className={cn('pricing-icon', `bg-gradient-to-br ${plan.gradient}`)}>
           <plan.icon className="w-6 h-6 text-white" />
         </div>
 
         {/* Plan Info */}
-        <h3 className="text-xl font-semibold text-white mb-1">{plan.name}</h3>
-        <p className="text-sm text-muted-foreground mb-4">{plan.description}</p>
+        <h3 className="pricing-plan-name">{plan.name}</h3>
+        <p className="pricing-plan-desc">{plan.description}</p>
 
         {/* Price */}
-        <div className="flex items-baseline gap-1 mb-6">
-          <span className="text-4xl md:text-5xl font-display text-white">{plan.price}</span>
-          <span className="text-muted-foreground">{plan.period}</span>
+        <div className="pricing-price">
+          <span className="pricing-price-value">{plan.price}</span>
+          <span className="pricing-price-period">{plan.period}</span>
         </div>
 
         {/* Features */}
-        <ul className="space-y-3 mb-8">
+        <ul className="pricing-features">
           {plan.features.map((feature) => (
-            <li key={feature} className="flex items-start gap-3">
-              <CheckIcon className={cn(
-                'w-5 h-5 flex-shrink-0 mt-0.5',
-                plan.popular ? 'text-basketball-orange' : 'text-muted-foreground'
-              )} />
-              <span className="text-sm text-muted-foreground">{feature}</span>
+            <li key={feature}>
+              <CheckIcon className={cn('w-5 h-5', plan.popular ? 'text-basketball-orange' : 'text-muted-foreground')} />
+              <span>{feature}</span>
             </li>
           ))}
         </ul>
@@ -173,89 +154,332 @@ export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly')
 
   return (
-    <section id="pricing" className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
-      
+    <section id="pricing" className="pricing-section">
       {/* Decorative elements */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-basketball-orange/5 rounded-full blur-[150px]" />
-      <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-purple-500/5 rounded-full blur-[120px]" />
+      <div className="pricing-glow-1" />
+      <div className="pricing-glow-2" />
 
-      <div className="relative z-10 section-centered">
-        <div className="section-content">
-          {/* Section Header */}
-          <motion.div
-            ref={sectionRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
+      <div className="pricing-container">
+        {/* Section Header */}
+        <motion.div
+          ref={sectionRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="pricing-header"
+        >
+          <span className="pricing-badge">Simple Pricing</span>
+          <h2 className="pricing-title">
+            <span className="text-white">CHOOSE YOUR</span>
+            <br />
+            <span className="gradient-text">GAME PLAN</span>
+          </h2>
+          <p className="pricing-subtitle">
+            Start free and upgrade as you grow. No hidden fees, cancel anytime.
+          </p>
+        </motion.div>
+
+        {/* Billing Toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="pricing-toggle"
+        >
+          <span className={cn('pricing-toggle-label', billingPeriod === 'monthly' && 'active')}>
+            Monthly
+          </span>
+          <button
+            onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
+            className="pricing-toggle-switch"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-basketball-orange/10 border border-basketball-orange/20 text-basketball-orange text-sm font-medium mb-4 md:mb-6">
-              Simple Pricing
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display tracking-tight mb-4 md:mb-6">
-              <span className="text-white">CHOOSE YOUR</span>
-              <br />
-              <span className="gradient-text">GAME PLAN</span>
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground">
-              Start free and upgrade as you grow. No hidden fees, cancel anytime.
-            </p>
-          </motion.div>
+            <motion.div
+              className="pricing-toggle-knob"
+              animate={{ left: billingPeriod === 'monthly' ? '4px' : '32px' }}
+              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+            />
+          </button>
+          <span className={cn('pricing-toggle-label', billingPeriod === 'yearly' && 'active')}>
+            Yearly
+            <span className="pricing-save-badge">Save 20%</span>
+          </span>
+        </motion.div>
 
-          {/* Billing Toggle */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex items-center justify-center gap-4 mb-12"
-          >
-            <span className={cn(
-              'text-sm transition-colors',
-              billingPeriod === 'monthly' ? 'text-white' : 'text-muted-foreground'
-            )}>
-              Monthly
-            </span>
-            <button
-              onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
-              className="relative w-14 h-7 rounded-full bg-muted/50 transition-colors"
-            >
-              <motion.div
-                className="absolute top-1 w-5 h-5 rounded-full bg-basketball-orange"
-                animate={{ left: billingPeriod === 'monthly' ? '4px' : '32px' }}
-                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-              />
-            </button>
-            <span className={cn(
-              'text-sm transition-colors',
-              billingPeriod === 'yearly' ? 'text-white' : 'text-muted-foreground'
-            )}>
-              Yearly
-              <span className="ml-2 px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 text-xs">
-                Save 20%
-              </span>
-            </span>
-          </motion.div>
-
-          {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 lg:gap-6 max-w-5xl mx-auto items-stretch">
-            {plans.map((plan, index) => (
-              <PricingCard key={plan.name} plan={plan} index={index} />
-            ))}
-          </div>
-
-          {/* Bottom note */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-center text-sm text-muted-foreground mt-12"
-          >
-            All plans include a 14-day free trial. No credit card required to start.
-          </motion.p>
+        {/* Pricing Cards */}
+        <div className="pricing-cards-grid">
+          {plans.map((plan, index) => (
+            <PricingCard key={plan.name} plan={plan} index={index} />
+          ))}
         </div>
+
+        {/* Bottom note */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="pricing-note"
+        >
+          All plans include a 14-day free trial. No credit card required to start.
+        </motion.p>
       </div>
+
+      <style jsx global>{`
+        .pricing-section {
+          position: relative;
+          padding: 100px 24px 120px;
+          background: hsl(var(--background));
+          overflow: hidden;
+        }
+
+        .pricing-glow-1 {
+          position: absolute;
+          top: 33%;
+          left: 25%;
+          width: 400px;
+          height: 400px;
+          background: rgba(255, 107, 53, 0.05);
+          border-radius: 50%;
+          filter: blur(150px);
+          pointer-events: none;
+        }
+
+        .pricing-glow-2 {
+          position: absolute;
+          bottom: 33%;
+          right: 25%;
+          width: 300px;
+          height: 300px;
+          background: rgba(139, 92, 246, 0.05);
+          border-radius: 50%;
+          filter: blur(120px);
+          pointer-events: none;
+        }
+
+        .pricing-container {
+          position: relative;
+          z-index: 10;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .pricing-header {
+          text-align: center;
+          max-width: 700px;
+          margin: 0 auto 50px;
+        }
+
+        .pricing-badge {
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 100px;
+          background: rgba(255, 107, 53, 0.1);
+          border: 1px solid rgba(255, 107, 53, 0.25);
+          color: #ff6b35;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 24px;
+        }
+
+        .pricing-title {
+          font-size: clamp(32px, 5vw, 52px);
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 20px;
+          letter-spacing: -0.02em;
+        }
+
+        .pricing-subtitle {
+          font-size: 17px;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.7;
+        }
+
+        .pricing-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin-bottom: 50px;
+        }
+
+        .pricing-toggle-label {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          transition: color 0.2s ease;
+        }
+
+        .pricing-toggle-label.active {
+          color: #fff;
+        }
+
+        .pricing-toggle-switch {
+          position: relative;
+          width: 56px;
+          height: 28px;
+          border-radius: 100px;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          cursor: pointer;
+        }
+
+        .pricing-toggle-knob {
+          position: absolute;
+          top: 4px;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #ff6b35;
+        }
+
+        .pricing-save-badge {
+          margin-left: 8px;
+          padding: 4px 8px;
+          background: rgba(34, 197, 94, 0.1);
+          color: #22c55e;
+          font-size: 11px;
+          border-radius: 20px;
+        }
+
+        .pricing-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          align-items: stretch;
+        }
+
+        @media (max-width: 900px) {
+          .pricing-cards-grid {
+            grid-template-columns: 1fr;
+            max-width: 400px;
+            margin: 0 auto;
+          }
+        }
+
+        .pricing-card-wrap {
+          position: relative;
+          height: 100%;
+        }
+
+        .pricing-card-wrap.popular {
+          z-index: 10;
+        }
+
+        .pricing-popular-badge {
+          position: absolute;
+          top: -16px;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 8px 20px;
+          background: linear-gradient(135deg, #ff6b35 0%, #ff8f5a 100%);
+          color: #fff;
+          font-size: 13px;
+          font-weight: 600;
+          border-radius: 100px;
+          box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+          z-index: 20;
+        }
+
+        .pricing-card {
+          height: 100%;
+          background: hsl(var(--card));
+          border-radius: 24px;
+          padding: 32px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          display: flex;
+          flex-direction: column;
+          transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+          border-color: rgba(255, 107, 53, 0.2);
+        }
+
+        .pricing-card.popular {
+          border-color: rgba(255, 107, 53, 0.4);
+          box-shadow: 0 20px 60px rgba(255, 107, 53, 0.1);
+          transform: scale(1.02);
+        }
+
+        @media (max-width: 900px) {
+          .pricing-card.popular {
+            transform: none;
+          }
+        }
+
+        .pricing-icon {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+
+        .pricing-plan-name {
+          font-size: 22px;
+          font-weight: 700;
+          color: #fff;
+          margin: 0 0 4px;
+        }
+
+        .pricing-plan-desc {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          margin: 0 0 20px;
+        }
+
+        .pricing-price {
+          display: flex;
+          align-items: baseline;
+          gap: 4px;
+          margin-bottom: 28px;
+        }
+
+        .pricing-price-value {
+          font-size: 44px;
+          font-weight: 800;
+          color: #fff;
+        }
+
+        .pricing-price-period {
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        .pricing-features {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 28px;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          flex-grow: 1;
+        }
+
+        .pricing-features li {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .pricing-features li svg {
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        .pricing-features li span {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .pricing-note {
+          text-align: center;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          margin-top: 50px;
+        }
+      `}</style>
     </section>
   )
 }

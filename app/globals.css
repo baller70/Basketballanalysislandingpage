@@ -4,32 +4,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 6%;
+    --card: 0 0% 11%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
+    --popover: 0 0% 11%;
     --popover-foreground: 0 0% 98%;
     --primary: 20 100% 57%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 12%;
+    --secondary: 0 0% 14%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
+    --muted: 0 0% 18%;
     --muted-foreground: 0 0% 65%;
     --accent: 20 100% 57%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
+    --border: 0 0% 20%;
     --input: 0 0% 15%;
     --ring: 20 100% 57%;
-    --radius: 0.75rem;
+    --radius: 1rem;
+    --card-gap: 12px;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    font-size: 18px;
   }
   body {
     @apply bg-background text-foreground;
@@ -67,12 +71,26 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Glass effect utility */
+/* Glass effect utility - PhotoAI style */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+}
+
+/* PhotoAI-style card */
+.photoai-card {
+  background: hsl(var(--card));
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.photoai-card:hover {
+  border-color: rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Gradient text */

@@ -60,31 +60,31 @@ const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimoni
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="glass rounded-2xl p-6 h-full flex flex-col hover:border-basketball-orange/20 transition-colors"
+      className="testimonial-card"
     >
       {/* Quote icon */}
-      <Quote className="w-8 h-8 text-basketball-orange/30 mb-4" />
+      <Quote className="testimonial-quote-icon" />
 
       {/* Content */}
-      <p className="text-muted-foreground leading-relaxed flex-grow mb-6">
+      <p className="testimonial-content">
         "{testimonial.content}"
       </p>
 
       {/* Rating */}
-      <div className="flex gap-1 mb-4">
+      <div className="testimonial-stars">
         {Array.from({ length: testimonial.rating }).map((_, i) => (
           <Star key={i} className="w-4 h-4 fill-basketball-orange text-basketball-orange" />
         ))}
       </div>
 
       {/* Author */}
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-basketball-orange/20 to-basketball-glow/20 flex items-center justify-center text-2xl">
+      <div className="testimonial-author">
+        <div className="testimonial-avatar">
           {testimonial.avatar}
         </div>
         <div>
-          <div className="font-medium text-white">{testimonial.name}</div>
-          <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+          <div className="testimonial-name">{testimonial.name}</div>
+          <div className="testimonial-role">{testimonial.role}</div>
         </div>
       </div>
     </motion.div>
@@ -96,64 +96,219 @@ export default function Testimonials() {
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
+    <section className="testimonials-section">
+      <div className="testimonials-container">
+        {/* Section Header */}
+        <motion.div
+          ref={sectionRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="testimonials-header"
+        >
+          <span className="testimonials-badge">Testimonials</span>
+          <h2 className="testimonials-title">
+            <span className="text-white">TRUSTED BY</span>
+            <br />
+            <span className="gradient-text">THOUSANDS</span>
+          </h2>
+          <p className="testimonials-subtitle">
+            Join the community of players and coaches who have transformed their shooting game with ShotIQ.
+          </p>
+        </motion.div>
 
-      <div className="relative z-10 section-centered">
-        <div className="section-content">
-          {/* Section Header */}
-          <motion.div
-            ref={sectionRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-basketball-orange/10 border border-basketball-orange/20 text-basketball-orange text-sm font-medium mb-4 md:mb-6">
-              Testimonials
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display tracking-tight mb-4 md:mb-6">
-              <span className="text-white">TRUSTED BY</span>
-              <br />
-              <span className="gradient-text">THOUSANDS</span>
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground">
-              Join the community of players and coaches who have transformed their shooting game with ShotIQ.
-            </p>
-          </motion.div>
-
-          {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
-            ))}
-          </div>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-          >
-            {[
-              { value: '50,000+', label: 'Active Users' },
-              { value: '1M+', label: 'Shots Analyzed' },
-              { value: '4.9/5', label: 'App Store Rating' },
-              { value: '89%', label: 'Improvement Rate' },
-            ].map((stat, index) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-display text-basketball-orange mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
+        {/* Testimonials Grid */}
+        <div className="testimonials-grid">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard key={testimonial.name} testimonial={testimonial} index={index} />
+          ))}
         </div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="testimonials-stats"
+        >
+          {[
+            { value: '50,000+', label: 'Active Users' },
+            { value: '1M+', label: 'Shots Analyzed' },
+            { value: '4.9/5', label: 'App Store Rating' },
+            { value: '89%', label: 'Improvement Rate' },
+          ].map((stat, index) => (
+            <div key={stat.label} className="testimonials-stat">
+              <div className="testimonials-stat-value">
+                {stat.value}
+              </div>
+              <div className="testimonials-stat-label">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
       </div>
+
+      <style jsx global>{`
+        .testimonials-section {
+          position: relative;
+          padding: 100px 24px 120px;
+          background: hsl(var(--background));
+          overflow: hidden;
+        }
+
+        .testimonials-container {
+          position: relative;
+          z-index: 10;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .testimonials-header {
+          text-align: center;
+          max-width: 700px;
+          margin: 0 auto 60px;
+        }
+
+        .testimonials-badge {
+          display: inline-block;
+          padding: 10px 20px;
+          border-radius: 100px;
+          background: rgba(255, 107, 53, 0.1);
+          border: 1px solid rgba(255, 107, 53, 0.25);
+          color: #ff6b35;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 24px;
+        }
+
+        .testimonials-title {
+          font-size: clamp(32px, 5vw, 52px);
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 20px;
+          letter-spacing: -0.02em;
+        }
+
+        .testimonials-subtitle {
+          font-size: 17px;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.7;
+        }
+
+        .testimonials-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+
+        @media (max-width: 1000px) {
+          .testimonials-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 600px) {
+          .testimonials-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .testimonial-card {
+          background: hsl(var(--card));
+          border-radius: 20px;
+          padding: 28px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+          border-color: rgba(255, 107, 53, 0.2);
+          transform: translateY(-4px);
+        }
+
+        .testimonial-quote-icon {
+          width: 32px;
+          height: 32px;
+          color: rgba(255, 107, 53, 0.3);
+          margin-bottom: 16px;
+        }
+
+        .testimonial-content {
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.7);
+          line-height: 1.7;
+          flex-grow: 1;
+          margin-bottom: 20px;
+        }
+
+        .testimonial-stars {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+
+        .testimonial-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 140, 66, 0.1) 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+        }
+
+        .testimonial-name {
+          font-size: 15px;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        .testimonial-role {
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        .testimonials-stats {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+          margin-top: 80px;
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media (max-width: 600px) {
+          .testimonials-stats {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        .testimonials-stat {
+          text-align: center;
+        }
+
+        .testimonials-stat-value {
+          font-size: clamp(24px, 4vw, 32px);
+          font-weight: 800;
+          color: #ff6b35;
+          margin-bottom: 4px;
+        }
+
+        .testimonials-stat-label {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+      `}</style>
     </section>
   )
 }
-

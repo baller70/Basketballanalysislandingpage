@@ -35,88 +35,221 @@ export default function CTA() {
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-muted/5 via-background to-background" />
-      
+    <section className="cta-section">
       {/* Animated gradient background */}
       <motion.div
-        className="absolute inset-0"
+        className="cta-bg-gradient"
         animate={{
           background: [
-            'radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%)',
-            'radial-gradient(ellipse at 80% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%)',
-            'radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.12) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 80% 50%, rgba(255, 107, 53, 0.12) 0%, transparent 50%)',
+            'radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.12) 0%, transparent 50%)',
           ],
         }}
         transition={{ duration: 10, repeat: Infinity }}
       />
 
-      <div className="relative z-10 section-centered">
-        <div className="section-content">
-          <motion.div
-            ref={sectionRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
-          >
-            {/* CTA Card */}
-            <div className="relative glass rounded-3xl p-8 md:p-12 lg:p-16 text-center overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-basketball-orange/10 rounded-full blur-[60px]" />
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-basketball-glow/10 rounded-full blur-[80px]" />
+      <div className="cta-container">
+        <motion.div
+          ref={sectionRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="cta-card-wrap"
+        >
+          {/* CTA Card */}
+          <div className="cta-card">
+            {/* Decorative elements */}
+            <div className="cta-glow-1" />
+            <div className="cta-glow-2" />
 
-              {/* Content */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="relative z-10"
-              >
-                {/* Icon */}
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-basketball-orange to-basketball-glow mb-6 md:mb-8">
-                  <span className="text-4xl">🏀</span>
-                </div>
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="cta-content"
+            >
+              {/* Icon */}
+              <div className="cta-icon">
+                <span>🏀</span>
+              </div>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display tracking-tight mb-4 md:mb-6">
-                  <span className="text-white">READY TO ELEVATE</span>
-                  <br />
-                  <span className="gradient-text">YOUR GAME?</span>
-                </h2>
+              <h2 className="cta-title">
+                <span className="text-white">READY TO ELEVATE</span>
+                <br />
+                <span className="gradient-text">YOUR GAME?</span>
+              </h2>
 
-                <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                  Join thousands of players who have transformed their shooting with AI-powered analysis. 
-                  Start your journey to becoming a better shooter today.
-                </p>
+              <p className="cta-subtitle">
+                Join thousands of players who have transformed their shooting with AI-powered analysis. 
+                Start your journey to becoming a better shooter today.
+              </p>
 
-                {/* Benefits */}
-                <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 md:mb-10">
-                  {benefits.map((benefit) => (
-                    <div key={benefit} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckIcon className="w-4 h-4 text-basketball-orange" />
-                      <span>{benefit}</span>
-                    </div>
-                  ))}
-                </div>
+              {/* Benefits */}
+              <div className="cta-benefits">
+                {benefits.map((benefit) => (
+                  <div key={benefit} className="cta-benefit">
+                    <CheckIcon className="w-4 h-4 text-basketball-orange" />
+                    <span>{benefit}</span>
+                  </div>
+                ))}
+              </div>
 
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Button variant="glow" size="xl" className="group w-full sm:w-auto">
-                    <SparklesIcon className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                    Get Started Free
-                    <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                  <Button variant="outline" size="xl" className="w-full sm:w-auto">
-                    <PlayIcon className="w-5 h-5 mr-2" />
-                    Watch Demo
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
+              {/* CTA Buttons */}
+              <div className="cta-buttons">
+                <Button variant="glow" size="xl" className="group">
+                  <SparklesIcon className="w-5 h-5 mr-2 group-hover:animate-pulse" />
+                  Get Started Free
+                  <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button variant="outline" size="xl">
+                  <PlayIcon className="w-5 h-5 mr-2" />
+                  Watch Demo
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
+
+      <style jsx global>{`
+        .cta-section {
+          position: relative;
+          padding: 100px 24px 120px;
+          background: hsl(var(--background));
+          overflow: hidden;
+        }
+
+        .cta-bg-gradient {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
+
+        .cta-container {
+          position: relative;
+          z-index: 10;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+
+        .cta-card-wrap {
+          position: relative;
+        }
+
+        .cta-card {
+          position: relative;
+          background: hsl(var(--card));
+          border-radius: 32px;
+          padding: 60px 40px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          text-align: center;
+          overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+          .cta-card {
+            padding: 48px 24px;
+            border-radius: 24px;
+          }
+        }
+
+        .cta-glow-1 {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 150px;
+          height: 150px;
+          background: rgba(255, 107, 53, 0.1);
+          border-radius: 50%;
+          filter: blur(80px);
+          pointer-events: none;
+        }
+
+        .cta-glow-2 {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 180px;
+          height: 180px;
+          background: rgba(255, 140, 66, 0.1);
+          border-radius: 50%;
+          filter: blur(100px);
+          pointer-events: none;
+        }
+
+        .cta-content {
+          position: relative;
+          z-index: 10;
+        }
+
+        .cta-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 80px;
+          height: 80px;
+          border-radius: 20px;
+          background: linear-gradient(135deg, #ff6b35 0%, #ff8f5a 100%);
+          margin-bottom: 32px;
+        }
+
+        .cta-icon span {
+          font-size: 40px;
+        }
+
+        .cta-title {
+          font-size: clamp(32px, 5vw, 52px);
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 20px;
+          letter-spacing: -0.02em;
+        }
+
+        .cta-subtitle {
+          font-size: 17px;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.7;
+          max-width: 600px;
+          margin: 0 auto 32px;
+        }
+
+        .cta-benefits {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 16px 28px;
+          margin-bottom: 40px;
+        }
+
+        .cta-benefit {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .cta-buttons {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+          .cta-buttons {
+            flex-direction: column;
+          }
+
+          .cta-buttons button,
+          .cta-buttons a {
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   )
 }

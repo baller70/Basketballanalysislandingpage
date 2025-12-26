@@ -1,9 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { cn } from '@/lib/utils'
 import {
   VideoIcon,
   TargetIcon,
@@ -15,100 +14,136 @@ import {
   BadgeIcon,
 } from '@/components/icons/BasketballIcons'
 
+// Alternating: shooting analysis → UI card → shooting analysis → UI card
 const features = [
-  {
-    icon: VideoIcon,
-    title: 'Video Upload & Processing',
-    description: 'Upload your shooting footage in any format. Our AI processes videos in real-time using advanced MediaPipe pose detection.',
-    gradient: 'from-blue-500 to-cyan-500',
-  },
-  {
-    icon: TargetIcon,
-    title: 'Shot Arc Analysis',
-    description: 'Measure your release angle, entry angle, and trajectory. Get the perfect 45-55° arc for optimal shooting percentage.',
-    gradient: 'from-basketball-orange to-basketball-glow',
-  },
+  // 1. Shooting - Allan Houston
   {
     icon: AnglesIcon,
-    title: 'Joint Angle Metrics',
-    description: 'Track shoulder, elbow, hip, knee, and ankle angles. Compare your form to professional standards.',
-    gradient: 'from-purple-500 to-pink-500',
+    title: 'Joint Angles',
+    description: 'Track shoulder, elbow, hip, knee, and ankle angles against pro standards.',
+    image: '/shooting/analysis-allan.png',
   },
-  {
-    icon: ReleasePointIcon,
-    title: 'Release Point Detection',
-    description: 'Identify your exact release height and timing. Optimize your release for maximum consistency.',
-    gradient: 'from-green-500 to-emerald-500',
-  },
-  {
-    icon: AIBrainIcon,
-    title: 'AI Recommendations',
-    description: 'Receive personalized coaching tips based on your unique shooting mechanics and areas for improvement.',
-    gradient: 'from-orange-500 to-red-500',
-  },
-  {
-    icon: ChartIcon,
-    title: 'Progress Tracking',
-    description: 'Monitor your improvement over time with detailed session history, charts, and milestone achievements.',
-    gradient: 'from-indigo-500 to-violet-500',
-  },
-  {
-    icon: CompareIcon,
-    title: 'Pro Comparison',
-    description: 'See which NBA player your shooting form matches most closely. Learn from the best shooters in the game.',
-    gradient: 'from-yellow-500 to-orange-500',
-  },
+  // 2. Card - Profile
   {
     icon: BadgeIcon,
-    title: 'Gamification & Badges',
-    description: 'Earn XP, unlock badges, maintain daily streaks, and climb the leaderboard as you improve your shot.',
-    gradient: 'from-pink-500 to-rose-500',
+    title: 'Player Profile',
+    description: 'Build your shooter profile with detailed stats, rankings, and progression history.',
+    image: '/shooting/card-profile.png',
+  },
+  // 3. Shooting - Kaitlyn Clark
+  {
+    icon: ReleasePointIcon,
+    title: 'Release Point',
+    description: 'Identify your exact release height and timing for maximum consistency.',
+    image: '/shooting/analysis-kaitlyn.png',
+  },
+  // 4. Card - Joint Angles
+  {
+    icon: AnglesIcon,
+    title: 'Angle Breakdown',
+    description: 'See detailed measurements for shoulder, elbow, hip, knee, and ankle angles.',
+    image: '/shooting/card-jointangles.png',
+  },
+  // 5. Shooting - DT
+  {
+    icon: ChartIcon,
+    title: 'Form Analysis',
+    description: 'Get comprehensive breakdown of your shooting mechanics in real-time.',
+    image: '/shooting/analysis-dt.png',
+  },
+  // 6. Card - Comparison
+  {
+    icon: CompareIcon,
+    title: 'Elite Comparison',
+    description: 'Compare your form with 250 elite players across NBA, WNBA, and NCAA.',
+    image: '/shooting/card-comparison.png',
+  },
+  // 7. Shooting - Nat
+  {
+    icon: TargetIcon,
+    title: 'Shot Arc',
+    description: 'Measure your release angle, entry angle, and trajectory for optimal shooting.',
+    image: '/shooting/analysis-nat.png',
+  },
+  // 8. Card - Release Metrics
+  {
+    icon: ReleasePointIcon,
+    title: 'Release Metrics',
+    description: 'Track release height, angle, and entry angle with precision measurements.',
+    image: '/shooting/card-release.png',
+  },
+  // 9. Shooting - Sue Bird
+  {
+    icon: AIBrainIcon,
+    title: 'AI Analysis',
+    description: 'Receive personalized coaching tips based on your unique mechanics.',
+    image: '/shooting/analysis-suebird.png',
+  },
+  // 10. Card - Matched Shooter
+  {
+    icon: CompareIcon,
+    title: 'Pro Match',
+    description: 'Discover which NBA/WNBA star your shooting form matches most closely.',
+    image: '/shooting/card-matched.png',
+  },
+  // 11. Shooting - Korver
+  {
+    icon: VideoIcon,
+    title: 'Video Breakdown',
+    description: 'Upload footage and get instant AI-powered analysis of your form.',
+    image: '/shooting/analysis-korver.png',
+  },
+  // 12. Card - Assessment
+  {
+    icon: ChartIcon,
+    title: 'Assessment Report',
+    description: 'Get detailed assessment with strengths, weaknesses, and improvement areas.',
+    image: '/shooting/card-assessment.png',
+  },
+  // 13. Shooting - JJ Redick
+  {
+    icon: TargetIcon,
+    title: 'Precision Tracking',
+    description: 'Track every angle and measurement with professional-grade accuracy.',
+    image: '/shooting/jj-redick-analysis.png',
+  },
+  // 14. Card - Recommendation
+  {
+    icon: AIBrainIcon,
+    title: 'Smart Drills',
+    description: 'Get personalized drill recommendations based on your specific needs.',
+    image: '/shooting/card-recommendation.png',
   },
 ]
 
-const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: number }) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+const FlipCard = ({ feature }: { feature: typeof features[0] }) => {
+  const [isFlipped, setIsFlipped] = useState(false)
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="feature-card group relative"
+    <div
+      className="masonry-item"
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+      onTouchStart={() => setIsFlipped(!isFlipped)}
     >
-      <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl"
-        style={{
-          backgroundImage: `linear-gradient(135deg, var(--tw-gradient-stops))`,
-        }}
-      />
-      <div className="relative glass rounded-2xl p-6 md:p-8 h-full">
-        {/* Icon */}
-        <div className={cn(
-          'w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-4 md:mb-6',
-          'bg-gradient-to-br',
-          feature.gradient
-        )}>
-          <feature.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+      <div className={`flip-inner ${isFlipped ? 'flipped' : ''}`}>
+        {/* Front - Image */}
+        <div className="flip-front">
+          <img 
+            src={feature.image} 
+            alt={feature.title}
+            loading="lazy"
+          />
         </div>
-
-        {/* Content */}
-        <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">
-          {feature.title}
-        </h3>
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-          {feature.description}
-        </p>
-
-        {/* Hover decoration */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-2xl"
-          style={{
-            backgroundImage: `linear-gradient(to right, var(--tw-gradient-stops))`,
-          }}
-        />
+        
+        {/* Back - Content */}
+        <div className="flip-back">
+          <feature.icon className="flip-icon" />
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -117,46 +152,196 @@ export default function Features() {
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
 
   return (
-    <section id="features" className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
-      
-      {/* Decorative elements */}
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-basketball-orange/5 rounded-full blur-[100px] -translate-y-1/2" />
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px]" />
+    <section id="features" className="features-section">
+      {/* Section Header */}
+      <motion.div
+        ref={sectionRef}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className="features-header"
+      >
+        <span className="features-badge">Powerful Features</span>
+        <h2 className="features-title">
+          EVERYTHING YOU NEED TO
+          <br />
+          <span className="gradient-text">PERFECT YOUR SHOT</span>
+        </h2>
+        <p className="features-subtitle">
+          Our comprehensive analysis platform provides all the tools you need to understand, 
+          improve, and master your basketball shooting technique.
+        </p>
+      </motion.div>
 
-      <div className="relative z-10 section-centered">
-        <div className="section-content">
-          {/* Section Header */}
-          <motion.div
-            ref={sectionRef}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-12 md:mb-20"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-basketball-orange/10 border border-basketball-orange/20 text-basketball-orange text-sm font-medium mb-4 md:mb-6">
-              Powerful Features
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display tracking-tight mb-4 md:mb-6">
-              <span className="text-white">EVERYTHING YOU NEED TO</span>
-              <br />
-              <span className="gradient-text">PERFECT YOUR SHOT</span>
-            </h2>
-            <p className="text-base md:text-lg text-muted-foreground">
-              Our comprehensive analysis platform provides all the tools you need to understand, 
-              improve, and master your basketball shooting technique.
-            </p>
-          </motion.div>
-
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {features.map((feature, index) => (
-              <FeatureCard key={feature.title} feature={feature} index={index} />
-            ))}
-          </div>
-        </div>
+      {/* Masonry Grid - PhotoAI style */}
+      <div className="masonry-container">
+        {features.map((feature, index) => (
+          <FlipCard key={`${feature.title}-${index}`} feature={feature} />
+        ))}
       </div>
+
+      <style jsx global>{`
+        .features-section {
+          position: relative;
+          padding: 80px 0 100px;
+          background: #0a0a0c;
+        }
+
+        .features-header {
+          text-align: center;
+          max-width: 800px;
+          margin: 0 auto 50px;
+          padding: 0 20px;
+        }
+
+        .features-badge {
+          display: inline-block;
+          padding: 8px 16px;
+          border-radius: 100px;
+          background: rgba(255, 107, 53, 0.1);
+          border: 1px solid rgba(255, 107, 53, 0.2);
+          color: #ff6b35;
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 20px;
+        }
+
+        .features-title {
+          font-size: clamp(28px, 5vw, 48px);
+          font-weight: 800;
+          color: #fff;
+          line-height: 1.1;
+          margin-bottom: 16px;
+          letter-spacing: -0.02em;
+        }
+
+        .features-subtitle {
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.6;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        /* Masonry Container - Grid */
+        .masonry-container {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 14px;
+          width: 100%;
+          max-width: 1900px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        @media (max-width: 1600px) {
+          .masonry-container { grid-template-columns: repeat(6, 1fr); }
+        }
+        @media (max-width: 1400px) {
+          .masonry-container { grid-template-columns: repeat(5, 1fr); }
+        }
+        @media (max-width: 1100px) {
+          .masonry-container { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 800px) {
+          .masonry-container { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 500px) {
+          .masonry-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Masonry Item */
+        .masonry-item {
+          perspective: 1000px;
+          cursor: pointer;
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        
+        /* Varying heights */
+        .masonry-item:nth-child(2n+1) {
+          height: 380px;
+        }
+        
+        .masonry-item:nth-child(2n+2) {
+          height: 320px;
+        }
+
+        .flip-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.5s ease;
+          transform-style: preserve-3d;
+        }
+
+        .flip-inner.flipped {
+          transform: rotateY(180deg);
+        }
+
+        .flip-front,
+        .flip-back {
+          backface-visibility: hidden;
+          border-radius: 12px;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+        }
+
+        .flip-front {
+          display: block;
+          position: relative;
+        }
+
+        .flip-front img {
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .flip-back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+          transform: rotateY(180deg);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          text-align: center;
+          border: 1px solid rgba(255, 107, 53, 0.3);
+          box-sizing: border-box;
+        }
+
+        .flip-icon {
+          width: 32px;
+          height: 32px;
+          color: #ff6b35;
+          margin-bottom: 10px;
+        }
+
+        .flip-back h3 {
+          font-size: 14px;
+          font-weight: 700;
+          color: #fff;
+          margin: 0 0 8px 0;
+        }
+
+        .flip-back p {
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.7);
+          line-height: 1.4;
+          margin: 0;
+        }
+      `}</style>
     </section>
   )
 }

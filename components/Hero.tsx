@@ -13,6 +13,7 @@ import {
   CheckIcon,
   StarFilledIcon,
 } from '@/components/icons/BasketballIcons'
+import BackgroundGrid from '@/components/BackgroundGrid'
 
 // Play icon for upload button
 const PlayIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
@@ -95,211 +96,388 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24"
+      className="hero-section"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background/95" />
-      
-      {/* Animated gradient orbs */}
-      <motion.div
-        className="absolute top-1/4 -left-32 w-96 h-96 bg-basketball-orange/20 rounded-full blur-[120px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 -right-32 w-96 h-96 bg-basketball-glow/15 rounded-full blur-[120px]"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
-
-      {/* Court pattern overlay */}
-      <div className="absolute inset-0 court-overlay opacity-30" />
+      {/* Animated Photo Grid Background - Hero Only */}
+      <BackgroundGrid />
 
       {/* Content */}
-      <motion.div style={{ y, opacity }} className="relative z-10 w-full">
-        <div className="section-centered">
-          <div className="section-content">
-            <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-basketball-orange/10 border border-basketball-orange/20 mb-6 md:mb-8"
-              >
-                <SparklesIcon className="w-4 h-4 text-basketball-orange" />
-                <span className="text-sm font-medium text-basketball-orange">
-                  AI-Powered Shot Analysis
-                </span>
-              </motion.div>
+      <motion.div style={{ y, opacity }} className="hero-content-wrap">
+        <div className="hero-content">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="hero-badge"
+          >
+            <SparklesIcon className="w-4 h-4 text-basketball-orange" />
+            <span className="uppercase tracking-wide">AI-Powered Shot Analysis</span>
+          </motion.div>
 
-              {/* Headline */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display tracking-tight mb-4 md:mb-6"
-              >
-                <span className="text-white">ELEVATE YOUR</span>
-                <br />
-                <span className="gradient-text">BASKETBALL SHOT</span>
-              </motion.h1>
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="hero-title"
+          >
+            <span className="text-white">ELEVATE YOUR</span>
+            <br />
+            <span className="gradient-text">BASKETBALL SHOT</span>
+          </motion.h1>
 
-              {/* Subheadline */}
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8 md:mb-10 px-4"
-              >
-                Upload your shooting footage and get instant AI-powered biomechanical analysis. 
-                Receive detailed metrics, personalized recommendations, and track your improvement over time.
-              </motion.p>
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="hero-subtitle"
+          >
+            Upload your shooting footage and get instant AI-powered biomechanical analysis. 
+            Receive detailed metrics, personalized recommendations, and track your improvement over time.
+          </motion.p>
 
-              {/* Quick Features */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8 md:mb-12"
-              >
-                {quickFeatures.map((feature, index) => (
-                  <div
-                    key={feature.text}
-                    className="flex items-center gap-2 text-sm text-muted-foreground"
-                  >
-                    <feature.icon className="w-4 h-4 text-basketball-orange" />
-                    <span>{feature.text}</span>
-                  </div>
-                ))}
-              </motion.div>
+          {/* Quick Features */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="hero-features"
+          >
+            {quickFeatures.map((feature, index) => (
+              <div key={feature.text} className="hero-feature">
+                <feature.icon className="w-4 h-4 text-basketball-orange" />
+                <span>{feature.text}</span>
+              </div>
+            ))}
+          </motion.div>
 
-              {/* Upload Zone */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="w-full max-w-2xl mb-8 md:mb-12"
-              >
-                <div
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
-                  className={cn(
-                    'upload-zone relative rounded-2xl p-8 md:p-12 cursor-pointer transition-all duration-300',
-                    isDragging && 'dragging scale-[1.02]',
-                    previewUrl && 'border-basketball-orange/50'
-                  )}
-                >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="video/*,image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
+          {/* Upload Zone */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="hero-upload-wrap"
+          >
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
+              className={cn(
+                'hero-upload-zone',
+                isDragging && 'dragging',
+                previewUrl && 'has-preview'
+              )}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="video/*,image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
 
-                  {previewUrl ? (
-                    <div className="flex flex-col items-center gap-4">
-                      {uploadedFile?.type.startsWith('video/') ? (
-                        <video
-                          src={previewUrl}
-                          className="w-full max-h-48 rounded-lg object-cover"
-                          controls
-                        />
-                      ) : (
-                        <img
-                          src={previewUrl}
-                          alt="Preview"
-                          className="w-full max-h-48 rounded-lg object-cover"
-                        />
-                      )}
-                      <div className="flex items-center gap-2 text-basketball-orange">
-                        <CheckIcon className="w-5 h-5" />
-                        <span className="font-medium">{uploadedFile?.name}</span>
-                      </div>
-                      <Button variant="glow" size="lg" className="mt-2">
-                        <SparklesIcon className="w-5 h-5 mr-2" />
-                        Analyze My Shot
-                      </Button>
-                    </div>
+              {previewUrl ? (
+                <div className="hero-upload-preview">
+                  {uploadedFile?.type.startsWith('video/') ? (
+                    <video
+                      src={previewUrl}
+                      className="hero-preview-media"
+                      controls
+                    />
                   ) : (
-                    <div className="flex flex-col items-center gap-4">
-                      <motion.div
-                        className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-basketball-orange/10 flex items-center justify-center"
-                        animate={{ y: isDragging ? -10 : 0 }}
-                      >
-                        <UploadIcon className="w-8 h-8 md:w-10 md:h-10 text-basketball-orange" />
-                      </motion.div>
-                      <div className="text-center">
-                        <p className="text-lg md:text-xl font-semibold text-white mb-2">
-                          Drop your video or image here
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          or click to browse • MP4, MOV, JPG, PNG supported
-                        </p>
-                      </div>
-                      <Button variant="glow" size="lg" className="mt-2">
-                        <PlayIcon className="w-5 h-5 mr-2" />
-                        Upload & Analyze
-                      </Button>
-                    </div>
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="hero-preview-media"
+                    />
                   )}
+                  <div className="hero-preview-info">
+                    <CheckIcon className="w-5 h-5" />
+                    <span>{uploadedFile?.name}</span>
+                  </div>
+                  <Button variant="glow" size="lg" className="mt-2">
+                    <SparklesIcon className="w-5 h-5 mr-2" />
+                    Analyze My Shot
+                  </Button>
+                </div>
+              ) : (
+                <div className="hero-upload-content">
+                  <motion.div
+                    className="hero-upload-icon"
+                    animate={{ y: isDragging ? -10 : 0 }}
+                  >
+                    <UploadIcon className="w-10 h-10 text-basketball-orange" />
+                  </motion.div>
+                  <div className="hero-upload-text">
+                    <p className="hero-upload-title uppercase">
+                      Drop your video or image here
+                    </p>
+                    <p className="hero-upload-hint">
+                      or click to browse • MP4, MOV, JPG, PNG supported
+                    </p>
+                  </div>
+                  <Button variant="glow" size="lg" className="mt-2 uppercase tracking-wide">
+                    <PlayIcon className="w-5 h-5 mr-2" />
+                    Upload & Analyze
+                  </Button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="hero-stats"
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 + index * 0.1 }}
+                className="hero-stat"
+              >
+                <div className="hero-stat-value">
+                  {stat.value}
+                </div>
+                <div className="hero-stat-label">
+                  {stat.label}
                 </div>
               </motion.div>
+            ))}
+          </motion.div>
 
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 w-full max-w-3xl"
-              >
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                    className="text-center"
-                  >
-                    <div className="text-2xl md:text-3xl lg:text-4xl font-display text-basketball-orange mb-1">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs md:text-sm text-muted-foreground">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* Scroll indicator */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2"
-              >
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="flex flex-col items-center gap-2 text-muted-foreground"
-                >
-                  <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
-                  <ArrowRightIcon className="w-4 h-4 rotate-90" />
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="hero-scroll-indicator"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="hero-scroll-content"
+            >
+              <span>Scroll to explore</span>
+              <ArrowRightIcon className="w-4 h-4 rotate-90" />
+            </motion.div>
+          </motion.div>
         </div>
       </motion.div>
+
+      <style jsx global>{`
+        .hero-section {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          padding-top: 80px;
+          background: hsl(var(--background));
+        }
+
+        .hero-content-wrap {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+        }
+
+        .hero-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px;
+          border-radius: 100px;
+          background: rgba(255, 107, 53, 0.1);
+          border: 1px solid rgba(255, 107, 53, 0.25);
+          margin-bottom: 28px;
+        }
+
+        .hero-badge span {
+          font-size: 14px;
+          font-weight: 600;
+          color: #ff6b35;
+        }
+
+        .hero-title {
+          font-size: clamp(36px, 7vw, 72px);
+          font-weight: 800;
+          line-height: 1.05;
+          letter-spacing: -0.02em;
+          margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+          font-size: clamp(16px, 2vw, 19px);
+          color: rgb(255, 255, 255);
+          line-height: 1.7;
+          max-width: 650px;
+          margin-bottom: 32px;
+        }
+
+        .hero-features {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 16px 28px;
+          margin-bottom: 40px;
+        }
+
+        .hero-feature {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          color: rgb(255, 255, 255);
+        }
+
+        .hero-upload-wrap {
+          width: 100%;
+          max-width: 600px;
+          margin-bottom: 48px;
+        }
+
+        .hero-upload-zone {
+          position: relative;
+          padding: 48px 32px;
+          border-radius: 24px;
+          background: rgba(255, 107, 53, 0.04);
+          border: 2px dashed rgba(255, 107, 53, 0.6);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .hero-upload-zone:hover,
+        .hero-upload-zone.dragging {
+          border-color: rgba(255, 107, 53, 0.8);
+          background: rgba(255, 107, 53, 0.08);
+        }
+
+        .hero-upload-zone.dragging {
+          transform: scale(1.02);
+        }
+
+        .hero-upload-zone.has-preview {
+          border-style: solid;
+          border-color: rgba(255, 107, 53, 0.7);
+        }
+
+        .hero-upload-content,
+        .hero-upload-preview {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .hero-upload-icon {
+          width: 80px;
+          height: 80px;
+          border-radius: 20px;
+          background: rgba(255, 107, 53, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .hero-upload-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: #fff;
+          margin: 0;
+        }
+
+        .hero-upload-hint {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.5);
+          margin: 0;
+        }
+
+        .hero-preview-media {
+          width: 100%;
+          max-height: 200px;
+          border-radius: 12px;
+          object-fit: cover;
+        }
+
+        .hero-preview-info {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #ff6b35;
+          font-weight: 500;
+        }
+
+        .hero-stats {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 32px;
+          width: 100%;
+          max-width: 700px;
+        }
+
+        @media (max-width: 600px) {
+          .hero-stats {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+          }
+        }
+
+        .hero-stat {
+          text-align: center;
+        }
+
+        .hero-stat-value {
+          font-size: clamp(24px, 4vw, 36px);
+          font-weight: 800;
+          color: #ff6b35;
+          margin-bottom: 4px;
+        }
+
+        .hero-stat-label {
+          font-size: 13px;
+          color: rgb(255, 255, 255);
+        }
+
+        .hero-scroll-indicator {
+          position: absolute;
+          bottom: 32px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .hero-scroll-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-scroll-content span {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+        }
+      `}</style>
     </section>
   )
 }
