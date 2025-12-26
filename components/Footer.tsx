@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Twitter, Instagram, Youtube, Linkedin, Github, Mail, MapPin, Phone } from 'lucide-react'
 
@@ -67,15 +68,13 @@ export default function Footer() {
               className="footer-logo"
               whileHover={{ scale: 1.02 }}
             >
-              <div className="footer-logo-icon">
-                <div className="footer-logo-bg" />
-                <div className="footer-logo-emoji">🏀</div>
-              </div>
-              <div className="footer-logo-text">
-                <span className="footer-logo-name">
-                  SHOT<span className="text-basketball-orange">IQ</span>
-                </span>
-              </div>
+              <Image
+                src="/shotiq-logo-white.png"
+                alt="ShotIQ Logo"
+                width={300}
+                height={80}
+                className="footer-logo-image"
+              />
             </motion.a>
             <p className="footer-desc">
               AI-powered basketball shooting analysis to help players of all levels perfect their shot.
@@ -190,46 +189,20 @@ export default function Footer() {
         }
 
         .footer-logo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
+          display: inline-block;
           text-decoration: none;
           margin-bottom: 16px;
         }
 
-        .footer-logo-icon {
-          position: relative;
-          width: 44px;
-          height: 44px;
+        .footer-logo-image {
+          width: auto;
+          height: auto;
+          max-width: 300px;
+          transition: opacity 0.2s ease;
         }
 
-        .footer-logo-bg {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, #ff6b35 0%, #ff8f5a 100%);
-          border-radius: 12px;
-          transform: rotate(3deg);
-          transition: transform 0.2s ease;
-        }
-
-        .footer-logo:hover .footer-logo-bg {
-          transform: rotate(6deg);
-        }
-
-        .footer-logo-emoji {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 24px;
-        }
-
-        .footer-logo-name {
-          font-size: 22px;
-          font-weight: 800;
-          color: #fff;
-          letter-spacing: 0.02em;
+        .footer-logo:hover .footer-logo-image {
+          opacity: 0.8;
         }
 
         .footer-desc {

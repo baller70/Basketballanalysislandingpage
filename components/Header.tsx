@@ -43,27 +43,18 @@ export default function Header() {
               {/* Logo */}
               <motion.a
                 href="#"
-                className="flex items-center gap-3 group"
+                className="flex items-center group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/shotiq-logo.png"
-                    alt="ShotIQ Logo"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-display text-xl md:text-2xl tracking-wide text-white">
-                    SHOT<span className="text-basketball-orange">IQ</span>
-                  </span>
-                  <span className="text-[10px] text-muted-foreground tracking-widest hidden sm:block">
-                    AI ANALYSIS
-                  </span>
-                </div>
+                <Image
+                  src="/shotiq-header-logo.png"
+                  alt="ShotIQ Logo"
+                  width={200}
+                  height={60}
+                  className="h-12 w-auto"
+                  priority
+                />
               </motion.a>
 
               {/* Desktop Navigation */}
