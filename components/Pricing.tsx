@@ -39,7 +39,8 @@ const plans = [
     period: 'forever',
     icon: LightningIcon,
     features: [
-      '5 shot analyses per month',
+      '1 shot analysis per month',
+      'Image only (no video)',
       'Basic biomechanical metrics',
       'Single session history',
       'Community support',
@@ -104,7 +105,7 @@ const PricingCard = ({ plan, index }: { plan: typeof plans[0]; index: number }) 
       {/* Popular badge */}
       {plan.popular && (
         <div className="pricing-popular-badge">
-          Most Popular
+            Most Popular
         </div>
       )}
 
@@ -160,68 +161,71 @@ export default function Pricing() {
       <div className="pricing-glow-2" />
 
       <div className="pricing-container">
-        {/* Section Header */}
-        <motion.div
-          ref={sectionRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          {/* Section Header */}
+          <motion.div
+            ref={sectionRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
           className="pricing-header"
         >
           <span className="pricing-badge">Simple Pricing</span>
           <h2 className="pricing-title">
-            <span className="text-white">CHOOSE YOUR</span>
-            <br />
-            <span className="gradient-text">GAME PLAN</span>
-          </h2>
+              <span className="text-white">CHOOSE YOUR</span>
+              <br />
+              <span className="gradient-text">GAME PLAN</span>
+            </h2>
           <p className="pricing-subtitle">
-            Start free and upgrade as you grow. No hidden fees, cancel anytime.
-          </p>
-        </motion.div>
+            <strong className="text-basketball-orange">🔥 Beta Pricing - Lock in your rate now!</strong>
+            <br />
+            These are beta prices. Get in now as prices will go up once beta period is up. 
+            Prices will increase, but if you lock it in now, your price will be the same. Forever.
+            </p>
+          </motion.div>
 
-        {/* Billing Toggle */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          {/* Billing Toggle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
           className="pricing-toggle"
-        >
-          <span className={cn('pricing-toggle-label', billingPeriod === 'monthly' && 'active')}>
-            Monthly
-          </span>
-          <button
-            onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
-            className="pricing-toggle-switch"
           >
-            <motion.div
+          <span className={cn('pricing-toggle-label', billingPeriod === 'monthly' && 'active')}>
+              Monthly
+            </span>
+            <button
+              onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
+            className="pricing-toggle-switch"
+            >
+              <motion.div
               className="pricing-toggle-knob"
-              animate={{ left: billingPeriod === 'monthly' ? '4px' : '32px' }}
-              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-            />
-          </button>
+                animate={{ left: billingPeriod === 'monthly' ? '4px' : '32px' }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+              />
+            </button>
           <span className={cn('pricing-toggle-label', billingPeriod === 'yearly' && 'active')}>
-            Yearly
+              Yearly
             <span className="pricing-save-badge">Save 20%</span>
-          </span>
-        </motion.div>
+            </span>
+          </motion.div>
 
-        {/* Pricing Cards */}
+          {/* Pricing Cards */}
         <div className="pricing-cards-grid">
-          {plans.map((plan, index) => (
-            <PricingCard key={plan.name} plan={plan} index={index} />
-          ))}
-        </div>
+            {plans.map((plan, index) => (
+              <PricingCard key={plan.name} plan={plan} index={index} />
+            ))}
+          </div>
 
-        {/* Bottom note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          {/* Bottom note */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
           className="pricing-note"
-        >
-          All plans include a 14-day free trial. No credit card required to start.
-        </motion.p>
-      </div>
+          >
+            All plans include a 14-day free trial. No credit card required to start.
+          </motion.p>
+        </div>
 
       <style jsx global>{`
         .pricing-section {
@@ -289,9 +293,11 @@ export default function Pricing() {
         }
 
         .pricing-subtitle {
-          font-size: 17px;
-          color: rgba(255, 255, 255, 0.6);
-          line-height: 1.7;
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1.8;
+          max-width: 700px;
+          margin: 0 auto;
         }
 
         .pricing-toggle {
