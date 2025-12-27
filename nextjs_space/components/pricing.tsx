@@ -142,8 +142,7 @@ const PricingCard = ({ plan, index }: { plan: typeof plans[0]; index: number }) 
             if (plan.cta === 'Contact Sales') {
               alert('Contact our sales team at hello@shotiq.ai for enterprise pricing!')
             } else {
-              const heroSection = document.querySelector('.hero-section')
-              heroSection?.scrollIntoView({ behavior: 'smooth' })
+              window.location.href = 'https://app.shotiqai.com/signup'
             }
           }}
         >

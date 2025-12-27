@@ -201,7 +201,7 @@ export default function Hero() {
                     variant="glow" 
                     size="lg" 
                     className="mt-2"
-                    onClick={() => alert('Upload your video to start analysis! Beta launching soon.')}
+                    onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
                   >
                     <SparklesIcon className="w-5 h-5 mr-2" />
                     Analyze My Shot
@@ -227,7 +227,7 @@ export default function Hero() {
                     variant="glow" 
                     size="lg" 
                     className="mt-2 uppercase tracking-wide"
-                    onClick={() => alert('Click to upload your shot video! Beta launching soon - sign up for early access.')}
+                    onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
                   >
                     <PlayIcon className="w-5 h-5 mr-2" />
                     Upload & Analyze

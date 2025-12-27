@@ -232,10 +232,7 @@ export default function Demo() {
             <Button 
               variant="outline" 
               size="lg"
-              onClick={() => {
-                const heroSection = document.querySelector('.hero-section')
-                heroSection?.scrollIntoView({ behavior: 'smooth' })
-              }}
+              onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
             >
               Upload Your Shot
               <ArrowRightIcon className="w-4 h-4 ml-2" />

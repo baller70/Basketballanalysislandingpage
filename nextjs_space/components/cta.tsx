@@ -102,10 +102,7 @@ export default function CTA() {
                   variant="glow" 
                   size="xl" 
                   className="group"
-                  onClick={() => {
-                    const heroSection = document.querySelector('.hero-section')
-                    heroSection?.scrollIntoView({ behavior: 'smooth' })
-                  }}
+                  onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
                 >
                   <SparklesIcon className="w-5 h-5 mr-2 group-hover:animate-pulse" />
                   Get Started Free

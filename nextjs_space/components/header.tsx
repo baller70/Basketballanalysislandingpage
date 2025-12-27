@@ -81,17 +81,14 @@ export default function Header() {
                 <Button 
                   variant="ghost" 
                   className="text-white hover:bg-white/10 uppercase tracking-wide"
-                  onClick={() => alert('Login functionality coming soon! Sign up for early access.')}
+                  onClick={() => window.location.href = 'https://app.shotiqai.com/login'}
                 >
                   Log In
                 </Button>
                 <Button 
                   variant="glow" 
                   className="group uppercase tracking-wide"
-                  onClick={() => {
-                    const heroSection = document.querySelector('.hero-section')
-                    heroSection?.scrollIntoView({ behavior: 'smooth' })
-                  }}
+                  onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
                 >
                   <Sparkles className="w-4 h-4 mr-2 group-hover:animate-pulse" />
                   Get Started Free
@@ -143,7 +140,7 @@ export default function Header() {
                         className="w-full justify-center text-white hover:bg-white/10 uppercase tracking-wide"
                         onClick={() => {
                           setIsMobileMenuOpen(false)
-                          alert('Login functionality coming soon! Sign up for early access.')
+                          window.location.href = 'https://app.shotiqai.com/login'
                         }}
                       >
                         Log In
@@ -153,8 +150,7 @@ export default function Header() {
                         className="w-full justify-center uppercase tracking-wide"
                         onClick={() => {
                           setIsMobileMenuOpen(false)
-                          const heroSection = document.querySelector('.hero-section')
-                          heroSection?.scrollIntoView({ behavior: 'smooth' })
+                          window.location.href = 'https://app.shotiqai.com/signup'
                         }}
                       >
                         <Sparkles className="w-4 h-4 mr-2" />

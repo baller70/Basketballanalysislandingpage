@@ -131,10 +131,7 @@ export default function HowItWorks() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="hiw-cta-btn"
-          onClick={() => {
-            const heroSection = document.querySelector('.hero-section')
-            heroSection?.scrollIntoView({ behavior: 'smooth' })
-          }}
+          onClick={() => window.location.href = 'https://app.shotiqai.com/signup'}
         >
           Start Your Analysis
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
