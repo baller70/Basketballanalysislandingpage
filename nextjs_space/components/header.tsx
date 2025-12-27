@@ -81,7 +81,7 @@ export default function Header() {
                 <Button 
                   variant="ghost" 
                   className="text-white hover:bg-white/10 uppercase tracking-wide"
-                  onClick={() => window.location.href = 'https://app.shotiqai.com/login'}
+                  onClick={() => window.location.href = 'https://app.shotiqai.com'}
                 >
                   Log In
                 </Button>
@@ -140,7 +140,7 @@ export default function Header() {
                         className="w-full justify-center text-white hover:bg-white/10 uppercase tracking-wide"
                         onClick={() => {
                           setIsMobileMenuOpen(false)
-                          window.location.href = 'https://app.shotiqai.com/login'
+                          window.location.href = 'https://app.shotiqai.com'
                         }}
                       >
                         Log In
