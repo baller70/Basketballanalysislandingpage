@@ -289,7 +289,7 @@ export default function Hero() {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding-top: 80px;
+          padding-top: 180px;
           background: hsl(var(--background));
         }
 
